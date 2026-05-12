@@ -2,10 +2,12 @@
 #include "common.h"
 #include "array_defs.h"
 
-#include <stdio.h>
+// #include <stdio.h>
 #include <stdlib.h>
-#include <malloc.h>
 #include <string.h>
+
+#include "printf.h"
+#include "runtime.h"
 
 void set_1d_array(real_t * arr, int length, real_t value, int stride);
 void set_2d_array(real_t arr[LEN_2D][LEN_2D], real_t value, int stride);
@@ -154,9 +156,10 @@ void set_2d_array(real_t arr[LEN_2D][LEN_2D], real_t value, int stride)
     }
 }
 
-void init(int** ip, real_t* s1, real_t* s2){
-    xx = (real_t*) memalign(ARRAY_ALIGNMENT, LEN_1D*sizeof(real_t));
-    *ip = (int *) memalign(ARRAY_ALIGNMENT, LEN_1D*sizeof(real_t));
+void init1(int** ip, real_t* s1, real_t* s2){
+    printf("Initialize!\n");
+    xx = (real_t*) baremetal_malloc(LEN_1D*sizeof(real_t));
+    *ip = (int *) baremetal_malloc(LEN_1D*sizeof(real_t));
 
     for (int i = 0; i < LEN_1D; i = i+5){
         (*ip)[i]   = (i+4);
@@ -1029,7 +1032,7 @@ real_t calc_checksum(const char * name)
     } else if (!strcmp(name, "vbor")) {
         return sum_x();
     } else {
-        fprintf(stderr, "Unknown function name passed to calc_checksum: %s\n", name);
+        printf("Unknown function name passed to calc_checksum: %s\n", name);
         exit(1);
     }
 }

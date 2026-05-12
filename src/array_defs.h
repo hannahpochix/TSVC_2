@@ -3,7 +3,7 @@
 
 // Arrays used by TSVC and common.c
 
-#define ARRAY_ALIGNMENT 64
+#define ARRAY_ALIGNMENT (4 * NR_LANES * NR_CLUSTERS)
 
 extern __attribute__((aligned(ARRAY_ALIGNMENT))) real_t flat_2d_array[LEN_2D*LEN_2D];
 

@@ -23,13 +23,13 @@
  */
 
 #include <time.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <sys/time.h>
 
 #include "common.h"
 #include "array_defs.h"
+#include "printf.h"
 
 // array definitions
 __attribute__((aligned(ARRAY_ALIGNMENT))) real_t flat_2d_array[LEN_2D*LEN_2D];
@@ -44,14 +44,14 @@ __attribute__((aligned(ARRAY_ALIGNMENT))) int indx[LEN_1D];
 real_t* __restrict__ xx;
 real_t* yy;
 
-real_t s000(struct args_t * func_args)
+__attribute__((noinline)) real_t s000(struct args_t * func_args)
 {
 
 //    linear dependence testing
 //    no dependence - vectorizable
 
     initialise_arrays(__func__);
-    gettimeofday(&func_args->t1, NULL);
+    // gettimeofday(&func_args->t1, NULL);
 
     for (int nl = 0; nl < 2*iterations; nl++) {
         for (int i = 0; i < LEN_1D; i++) {
@@ -60,7 +60,7 @@ real_t s000(struct args_t * func_args)
         dummy((real_t*)a, (real_t*)b, (real_t*)c, (real_t*)d, (real_t*)e, aa, bb, cc, 0.);
     }
 
-    gettimeofday(&func_args->t2, NULL);
+    // gettimeofday(&func_args->t2, NULL);
     return calc_checksum(__func__);
 }
 
@@ -3957,16 +3957,17 @@ void time_function(test_function_t vector_func, void * arg_info)
     printf("%10.3f\t%f\n", taken, result);
 }
 
-int main(int argc, char ** argv){
+int main(){
+    printf("-----Testing TSVC_2-----\n");
     int n1 = 1;
     int n3 = 1;
     int* ip;
     real_t s1,s2;
-    init(&ip, &s1, &s2);
+    init1(&ip, &s1, &s2);
     printf("Loop \tTime(sec) \tChecksum\n");
 
     time_function(&s000, NULL);
-    time_function(&s111, NULL);
+    /*time_function(&s111, NULL);
     time_function(&s1111, NULL);
     time_function(&s112, NULL);
     time_function(&s1112, NULL);
@@ -4115,7 +4116,7 @@ int main(int argc, char ** argv){
     time_function(&vtvtv, NULL);
     time_function(&vsumr, NULL);
     time_function(&vdotr, NULL);
-    time_function(&vbor, NULL);
+    time_function(&vbor, NULL);*/
 
     return EXIT_SUCCESS;
 }
