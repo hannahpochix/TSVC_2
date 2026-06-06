@@ -65,23 +65,24 @@ __attribute__((noinline)) real_t s000(struct args_t * func_args)
 }
 
 // %1.1
-real_t s111(struct args_t * func_args)
+__attribute__((noinline))real_t s111(struct args_t * func_args)
 {
 
 //    linear dependence testing
 //    no dependence - vectorizable
 
     initialise_arrays(__func__);
-    gettimeofday(&func_args->t1, NULL);
+    //gettimeofday(&func_args->t1, NULL);
 
     for (int nl = 0; nl < 2*iterations; nl++) {
         for (int i = 1; i < LEN_1D; i += 2) {
             a[i] = a[i - 1] + b[i];
         }
-        dummy(a, b, c, d, e, aa, bb, cc, 0.);
+        dummy((real_t*)a, (real_t*)b, (real_t*)c, (real_t*)d, (real_t*)e, aa, bb, cc, 0.);
+        //dummy(a, b, c, d, e, aa, bb, cc, 0.);
     }
 
-    gettimeofday(&func_args->t2, NULL);
+    //gettimeofday(&func_args->t2, NULL);
     return calc_checksum(__func__);
 }
 
@@ -3966,12 +3967,12 @@ int main(){
     init1(&ip, &s1, &s2);
     printf("Loop \tTime(sec) \tChecksum\n");
 
-    time_function(&s000, NULL);
-    /*time_function(&s111, NULL);
-    time_function(&s1111, NULL);
-    time_function(&s112, NULL);
-    time_function(&s1112, NULL);
-    time_function(&s113, NULL);
+    //time_function(&s000, NULL);
+    time_function(&s111, NULL);
+    //time_function(&s1111, NULL);
+    //time_function(&s112, NULL);
+    //time_function(&s1112, NULL);
+    /*time_function(&s113, NULL);
     time_function(&s1113, NULL);
     time_function(&s114, NULL);
     time_function(&s115, NULL);

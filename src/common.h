@@ -3,7 +3,7 @@
 
 #define iterations 10
 #define LEN_1D 256
-#define LEN_2D 256
+#define LEN_2D 128
 
 #include <sys/time.h>
 

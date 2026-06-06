@@ -160,7 +160,7 @@ void init1(int** ip, real_t* s1, real_t* s2){
     printf("Initialize!\n");
     xx = (real_t*) baremetal_malloc(LEN_1D*sizeof(real_t));
     *ip = (int *) baremetal_malloc(LEN_1D*sizeof(real_t));
-
+    
     for (int i = 0; i < LEN_1D; i = i+5){
         (*ip)[i]   = (i+4);
         (*ip)[i+1] = (i+2);
@@ -168,7 +168,7 @@ void init1(int** ip, real_t* s1, real_t* s2){
         (*ip)[i+3] = (i+3);
         (*ip)[i+4] = (i+1);
     }
-
+    
     set_1d_array(a, LEN_1D, 1.,1);
     set_1d_array(b, LEN_1D, 1.,1);
     set_1d_array(c, LEN_1D, 1.,1);
@@ -178,7 +178,7 @@ void init1(int** ip, real_t* s1, real_t* s2){
     set_2d_array(aa, 0.,SET1D_RECIP_IDX);
     set_2d_array(bb, 0.,SET1D_RECIP_IDX);
     set_2d_array(cc, 0.,SET1D_RECIP_IDX);
-
+    
     for (int i = 0; i < LEN_1D; i++) {
         indx[i] = (i+1) % 4+1;
     }
